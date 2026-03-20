@@ -96,8 +96,7 @@ codeunit 50303 "ICLTS Tracking Engine"
                 PurchaseHeader."No.", ICPartnerCode, OutboundDocNo),
             1, 250);
 
-        ICLTSRepository.GetPendingTrackingLines(TrackingBuffer, ICPartnerCode, OutboundDocNo);
-        if not TrackingBuffer.FindSet() then
+        if not ICLTSRepository.GetPendingTrackingLines(TrackingBuffer, ICPartnerCode, OutboundDocNo) then
             exit;
 
         // Lock before reading the last entry no. to prevent duplicate allocation
@@ -117,6 +116,14 @@ codeunit 50303 "ICLTS Tracking Engine"
                 // purchase line but the goods have not yet been received into inventory.
                 // BC will update the status to "Tracking" or "Reservation" automatically
                 // when the purchase order is further processed or received.
+                //
+                // Architecture note (A-01): Direct insertion into the standard BC
+                // Reservation Entry table with Reservation Status::Surplus IS the
+                // documented BC platform mechanism for creating unlinked item-tracking
+                // (lot/serial) entries.  No higher-level public API exists for this
+                // specific operation; all BC standard codeunits (Create Reserv. Entry,
+                // Item Tracking Management) ultimately perform the same direct insert
+                // after populating the same fields.
                 ReservationEntry.Init();
                 ReservationEntry."Entry No." := NextEntryNo;
                 ReservationEntry.Positive := true;

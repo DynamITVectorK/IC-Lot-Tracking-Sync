@@ -10,7 +10,7 @@ codeunit 50305 "ICLTS Inbound Subscriber"
     SingleInstance = false;
 
     var
-        ICLTSSetup: Record "ICLTS Setup";
+        ICLTSSetupMgt: Codeunit "ICLTS Setup Mgt.";
         ICLTSTrackingEngine: Codeunit "ICLTS Tracking Engine";
         ICLTSGapLogMgt: Codeunit "ICLTS Gap Log Mgt.";
 
@@ -24,7 +24,7 @@ codeunit 50305 "ICLTS Inbound Subscriber"
         ICPartnerCode: Code[20];
         OutboundDocNo: Code[20];
     begin
-        if not ICLTSSetup.IsModuleEnabled("ICLTS Module Code"::"MOD-01") then
+        if not ICLTSSetupMgt.IsModuleEnabled("ICLTS Module Code"::"MOD-01") then
             exit;
 
         ICPartnerCode := ICInboxPurchaseHeader."IC Partner Code";
@@ -53,7 +53,7 @@ codeunit 50305 "ICLTS Inbound Subscriber"
         ICPartnerCode: Code[20];
         OutboundDocNo: Code[20];
     begin
-        if not ICLTSSetup.IsModuleEnabled("ICLTS Module Code"::"MOD-01") then
+        if not ICLTSSetupMgt.IsModuleEnabled("ICLTS Module Code"::"MOD-01") then
             exit;
 
         ICPartnerCode := ICInboxSalesHeader."IC Partner Code";
