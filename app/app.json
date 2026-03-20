@@ -1,0 +1,29 @@
+{
+  "$schema": "https://raw.githubusercontent.com/microsoft/AL-Go-Actions/v8.3/.Modules/settings.schema.json",
+  "id": "d9b4e1f2-3a5c-4d7e-8f9a-0b1c2d3e4f50",
+  "name": "IC Lot Tracking Sync",
+  "publisher": "DynamITVectorK",
+  "version": "1.0.0.0",
+  "brief": "Propagates Item Tracking in Intercompany documents for BC SaaS",
+  "description": "Extends the native BC Intercompany module to propagate lot numbers, serial numbers, and item variants between IC partner companies. Covers the critical gap in the native ICP module where item tracking is not included in intercompany document synchronization.",
+  "privacyStatement": "",
+  "EULA": "",
+  "help": "",
+  "url": "",
+  "logo": "",
+  "dependencies": [],
+  "screenshots": [],
+  "platform": "24.0.0.0",
+  "application": "24.0.0.0",
+  "idRanges": [
+    {
+      "from": 50300,
+      "to": 50399
+    }
+  ],
+  "target": "Cloud",
+  "features": [
+    "TranslationFile"
+  ],
+  "runtime": "13.0"
+}
