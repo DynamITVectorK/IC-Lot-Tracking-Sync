@@ -51,21 +51,25 @@ codeunit 50301 "ICLTS Repository"
     end;
 
     /// <summary>
-    /// Returns a filtered, unprocessed tracking-buffer dataset for the given IC partner
-    /// and outbound document number.
+    /// Filters the tracking-buffer to unprocessed lines for the given IC partner and
+    /// outbound document number, positions the cursor on the first record, and returns
+    /// whether at least one matching line exists.  The caller may iterate the result set
+    /// using <c>TrackingBuffer.Next()</c>.
     /// </summary>
-    /// <param name="TrackingBuffer">Output — the filtered record set (caller iterates it).</param>
+    /// <param name="TrackingBuffer">Output — the filtered, positioned record set (caller iterates it).</param>
     /// <param name="ICPartnerCode">The IC partner filter.</param>
     /// <param name="OutboundDocNo">The outbound document number filter.</param>
+    /// <returns>True when one or more unprocessed lines exist; false when the set is empty.</returns>
     procedure GetPendingTrackingLines(
         var TrackingBuffer: Record "ICLTS Tracking Buffer";
         ICPartnerCode: Code[20];
-        OutboundDocNo: Code[20])
+        OutboundDocNo: Code[20]): Boolean
     begin
         TrackingBuffer.Reset();
         TrackingBuffer.SetRange("IC Partner Code", ICPartnerCode);
         TrackingBuffer.SetRange("Outbound Doc. No.", OutboundDocNo);
         TrackingBuffer.SetRange("Processed", false);
+        exit(TrackingBuffer.FindSet());
     end;
 
     /// <summary>

@@ -11,7 +11,7 @@ codeunit 50304 "ICLTS Outbound Subscriber"
     SingleInstance = false;
 
     var
-        ICLTSSetup: Record "ICLTS Setup";
+        ICLTSSetupMgt: Codeunit "ICLTS Setup Mgt.";
         ICLTSTrackingEngine: Codeunit "ICLTS Tracking Engine";
         ICLTSGapLogMgt: Codeunit "ICLTS Gap Log Mgt.";
 
@@ -22,7 +22,7 @@ codeunit 50304 "ICLTS Outbound Subscriber"
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"IC Outbox Mgt.", 'OnAfterSendICDocument', '', false, false)]
     local procedure OnAfterSendICDocument(var ICOutboxTransaction: Record "IC Outbox Transaction"; var SalesHeader: Record "Sales Header")
     begin
-        if not ICLTSSetup.IsModuleEnabled("ICLTS Module Code"::"MOD-01") then
+        if not ICLTSSetupMgt.IsModuleEnabled("ICLTS Module Code"::"MOD-01") then
             exit;
 
         if not TryCaptureOutboundTracking(SalesHeader, ICOutboxTransaction."IC Partner Code") then
@@ -42,7 +42,7 @@ codeunit 50304 "ICLTS Outbound Subscriber"
     var
         ICPartnerCode: Code[20];
     begin
-        if not ICLTSSetup.IsModuleEnabled("ICLTS Module Code"::"MOD-01") then
+        if not ICLTSSetupMgt.IsModuleEnabled("ICLTS Module Code"::"MOD-01") then
             exit;
 
         ICPartnerCode := ICOutboxSalesHeader."IC Partner Code";
